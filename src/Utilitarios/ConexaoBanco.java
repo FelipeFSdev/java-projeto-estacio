@@ -1,24 +1,24 @@
-package Aplicacao;
+package Utilitarios;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Conexao {
-    private String url = "jdbc:postgresql://localhost:5432/ProjetoFacul";
-    private String usuario = "postgres";
-    private String senha = "356428";
-    private Connection conexao;
+public class ConexaoBanco {
+    private static String url = "jdbc:postgresql://localhost:5432/ProjetoFacul";
+    private static String usuario = "postgres";
+    private static String senha = "356428";
+    private static Connection conexao;
 
-    public Conexao() {
+    public ConexaoBanco() {
         conectar();
     }
 
-    private void conectar() {
+    public static Connection conectar() {
         try {
             Class.forName("org.postgresql.Driver");
             conexao = DriverManager.getConnection(url, usuario, senha);
-            System.out.println("Conexão bem sucedida com o banco de dados");
+            
         } catch (ClassNotFoundException e) {
             System.out.println("Driver JDBC do PostgreSQL não encontrado.");
             e.printStackTrace();
@@ -26,6 +26,7 @@ public class Conexao {
             System.out.println("Erro ao conectar ao banco de dados.");
             e.printStackTrace();
         }
+		return conexao;
     }
 
     public Connection getConexao() {

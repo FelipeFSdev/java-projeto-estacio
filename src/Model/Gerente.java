@@ -1,9 +1,9 @@
-package Usuarios;
+package Model;
 
-public final class Administrador extends Funcionario{
+public final class Gerente extends Vendedor{
 	double bonusDeCargo;
 
-	public Administrador(
+	public Gerente(
 			String nome, String email,
 			String cpf, int idade,
 			String senha, String cargo,

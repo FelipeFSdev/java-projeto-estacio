@@ -1,4 +1,4 @@
-package Loja;
+package Model;
 
 import java.util.UUID;
 

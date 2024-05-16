@@ -1,11 +1,11 @@
-package Usuarios;
+package Model;
 
-public class Funcionario extends Pessoa{
+public class Vendedor extends Pessoa{
 	protected String senha;
 	protected String cargo;
 	protected double salario;
 	
-	public Funcionario(
+	public Vendedor(
 			String nome, String email,
 			String cpf, int idade,
 			String senha, String cargo,
@@ -17,6 +17,9 @@ public class Funcionario extends Pessoa{
 		this.salario = salario;
 	};
 	
+	public String getSenha() {
+		return this.senha;
+	};
 	public String getCargo() {
 		return this.cargo;
 	};
@@ -24,7 +27,7 @@ public class Funcionario extends Pessoa{
 		double salarioAnual = this.salario*12;
 		
 		return salarioAnual;
-	}
+	};
 	
 	public String cadastrarCliente(
 			String nome, String email,
@@ -38,5 +41,7 @@ public class Funcionario extends Pessoa{
 		setEmail(email);
 		return "Atualização realizada!";
 	}
+
+	
 	
 }
