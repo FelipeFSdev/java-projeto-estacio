@@ -5,6 +5,7 @@ public class Vendedor extends Pessoa{
 	protected String cargo;
 	protected double salario;
 	
+	public Vendedor() {}
 	public Vendedor(
 			String nome, String email,
 			String cpf, int idade,
@@ -17,16 +18,28 @@ public class Vendedor extends Pessoa{
 		this.salario = salario;
 	};
 	
+
 	public String getSenha() {
 		return this.senha;
 	};
+	public void setSenha(String novaSenha) {
+		this.senha = novaSenha;
+	};
+	
 	public String getCargo() {
 		return this.cargo;
 	};
+	public void setCargo(String novoCargo) {
+		this.cargo = novoCargo;
+	};
+	
 	public double getSalarioAnual() {
 		double salarioAnual = this.salario*12;
 		
 		return salarioAnual;
+	};
+	public void setSalario(double novoSalario) {
+		this.salario = novoSalario;
 	};
 	
 	public String cadastrarCliente(
@@ -40,6 +53,11 @@ public class Vendedor extends Pessoa{
 		setNome(nome);
 		setEmail(email);
 		return "Atualização realizada!";
+	}
+	@Override
+	public String toString() {
+		return "nome:" + nome + ", email:" + email + ", cpf:" + cpf + ", idade:"
+				+ idade + ", cargo:" + cargo + ", salario:" + salario;
 	}
 
 	

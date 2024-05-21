@@ -1,0 +1,5 @@
+como chamar o DAO dentro da classe vendedor, produto, etc?
+
+vendedor deve criar um cadastro de cliente, a função deve de cadastrar cliente deve estar na classe cliente ou na classe vendedor?
+
+organização dos packages.

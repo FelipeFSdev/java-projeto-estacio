@@ -13,6 +13,10 @@ public final class Gerente extends Vendedor{
 		this.bonusDeCargo = bonusDeCargo;
 	}
 	
+	public double getBonusDeCargo() {
+		return this.bonusDeCargo;
+	}
+	
 	@Override
 	public double getSalarioAnual() {
 		double salarioAnual = (salario + bonusDeCargo) * 12;
@@ -36,4 +40,5 @@ public final class Gerente extends Vendedor{
 		//funcionario setCargp(cargo);
 		return "Atualização realizada!";
 	}
+
 }
