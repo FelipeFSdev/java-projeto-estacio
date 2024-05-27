@@ -2,11 +2,59 @@ package DataAccessObject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.Gerente;
 import Utilitarios.ConexaoBanco;
 
 public class GerenteDAO {
+	
+	public List<Gerente> Listar() {
+		String sql = "SELECT * FROM pessoas WHERE cargo ILIKE 'gerente'";
+		List<Gerente> gerentes = new ArrayList<>();
+		
+		Connection conn = ConexaoBanco.conectar();
+		PreparedStatement pgstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			pgstmt = conn.prepareStatement(sql);
+			rset = pgstmt.executeQuery();
+			
+			while(rset.next()) {
+				String id = rset.getString("id"), nome = rset.getString("nome");
+				String email = rset.getString("email"), cpf = rset.getString("cpf");
+				String senha = rset.getString("senha"), cargo = rset.getString("cargo");
+				int idade = rset.getInt("idade");
+				double salario = rset.getDouble("salario"), bonusDeCargo = rset.getDouble("bonus_cargo");
+				
+				Gerente gerente = new Gerente(nome, email, cpf, idade, cargo, senha, salario, bonusDeCargo);
+				gerente.setId(id);
+				
+				gerentes.add(gerente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(rset != null) {
+					pgstmt.close();
+				}
+				if(pgstmt != null) {
+					pgstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return gerentes;
+	}
 	
 	public void Salvar(Gerente gerente) {
 		String sql = "INSERT INTO pessoas (id, nome, email, cpf, idade, senha, cargo, salario, bonus_Cargo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -29,8 +77,19 @@ public class GerenteDAO {
 			pgstmt.setDouble(9,gerente.getBonusDeCargo());
 			
 			pgstmt.execute();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(conexaoPg != null) {
+					conexaoPg.close();
+				}
+				if(pgstmt != null) {
+					pgstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }

@@ -3,6 +3,7 @@ package DataAccessObject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,14 @@ public class ProdutoDAO {
 	
 	public List<Produto> Listar(){
 		String sql = "SELECT * FROM produtos";
-		ArrayList<Produto> produtos = new ArrayList<>();
+		List<Produto> produtos = new ArrayList<>();
 		
+		Connection conn = ConexaoBanco.conectar();
 		PreparedStatement pgstmt = null;
 		ResultSet rset = null;
+		
 		try {
-			pgstmt = ConexaoBanco.conectar().prepareStatement(sql);
+			pgstmt = conn.prepareStatement(sql);
 			
 			rset = pgstmt.executeQuery();
 			while(rset.next()) {
@@ -32,11 +35,23 @@ public class ProdutoDAO {
 				
 				produtos.add(produto);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(rset != null) {
+					pgstmt.close();
+				}
+				if(pgstmt != null) {
+					pgstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		
 		return produtos;
 	}
 
@@ -58,8 +73,19 @@ public class ProdutoDAO {
 			pgstmt.setString(6, produto.getCategoria());
 			
 			pgstmt.execute();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(conexaoPg != null) {
+					conexaoPg.close();
+				}
+				if(pgstmt != null) {
+					pgstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
