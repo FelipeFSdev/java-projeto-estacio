@@ -57,6 +57,8 @@ public abstract class Pessoa {
 		this.idade = novaIdade;
 	};
 	
-	
+	public String toString() {
+		return "Pessoa [id=" + id + ", nome=" + nome + ", email=" + email + ", cpf=" + cpf + ", idade=" + idade + "]";
+	}
 	
 }

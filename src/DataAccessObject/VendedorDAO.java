@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Vendedor;
+
 import Utilitarios.ConexaoBanco;
 
 public class VendedorDAO {
@@ -16,14 +17,15 @@ public class VendedorDAO {
 		String sql = "SELECT * FROM pessoas WHERE cargo ILIKE 'vendedor'";		
 		List<Vendedor> vendedores = new ArrayList<Vendedor>();
 		
-		Connection conn = ConexaoBanco.conectar();
+		Connection conn = null;
 		PreparedStatement pgstmt = null;
 		ResultSet rset = null;
 		
 		try {
-			pgstmt = conn.prepareStatement(sql);
-			
+			conn = ConexaoBanco.conectar();
+			pgstmt = conn.prepareStatement(sql);	
 			rset = pgstmt.executeQuery();
+			
 			while (rset.next()) {
 				String id = rset.getString("id"), nome = rset.getString("nome");
 				String email = rset.getString("email"), cpf = rset.getString("cpf");
@@ -35,6 +37,7 @@ public class VendedorDAO {
 				
 				vendedores.add(vendedor);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -118,7 +121,7 @@ public class VendedorDAO {
 			pgstmt.setInt(5, vendedor.getIdade());
 			pgstmt.setString(6, vendedor.getSenha());
 			pgstmt.setString(7, vendedor.getCargo());
-			pgstmt.setDouble(8, vendedor.getSalarioAnual());
+			pgstmt.setDouble(8, vendedor.getSalario());
 			
 			pgstmt.execute();
 		} catch (SQLException e) {
@@ -138,7 +141,8 @@ public class VendedorDAO {
 	}
 	
 	public void Atualizar(Vendedor vendedor) {
-		String sql = "UPDATE pessoas SET nome = ?, email = ?, cpf = ?, idade = ?, senha = ?, cargo = ?, salario = ? WHERE id = ?";
+		String sql = "UPDATE pessoas SET nome = ?, email = ?, cpf = ?, idade = ?, senha = ?, cargo = ?, salario = ? " + 
+					 "WHERE id ILIKE ? AND cargo ILIKE 'vendedor'";
 		
 		Connection conn = null;
 		PreparedStatement pgstmt = null;
@@ -147,15 +151,19 @@ public class VendedorDAO {
 			conn = ConexaoBanco.conectar();
 			pgstmt = conn.prepareStatement(sql);
 			
-			pgstmt.setString(1, vendedor.getNome());
-			pgstmt.setString(2, vendedor.getEmail());
-			pgstmt.setString(3, vendedor.getCpf());
-			pgstmt.setInt(4,vendedor.getIdade());
-			pgstmt.setString(5, vendedor.getSenha());
-			pgstmt.setString(6, vendedor.getCargo());
-			pgstmt.setDouble(7, vendedor.getSalarioAnual());
+			if(vendedor != null) {
+				pgstmt.setString(1, vendedor.getNome());
+				pgstmt.setString(2, vendedor.getEmail());
+				pgstmt.setString(3, vendedor.getCpf());
+				pgstmt.setInt(4,vendedor.getIdade());
+				pgstmt.setString(5, vendedor.getSenha());
+				pgstmt.setString(6, vendedor.getCargo());
+				pgstmt.setDouble(7, vendedor.getSalario());
+				pgstmt.setString(8, vendedor.getId());
 			
-			pgstmt.execute();
+				pgstmt.execute();
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -170,10 +178,38 @@ public class VendedorDAO {
 				e.printStackTrace();
 			}
 		}
+				
+	}
+	
+	public void Deletar(Vendedor vendedor) {
+		String sql = "DELETE FROM pessoas WHERE id ILIKE ? AND cargo ILIKE 'vendedor'";
 		
+		Connection conn = null;
+		PreparedStatement pgstmt = null;
 		
-		
-		
-		
+		try {
+			conn = ConexaoBanco.conectar();
+			pgstmt = conn.prepareStatement(sql);
+			
+			if(vendedor != null) {
+				pgstmt.setString(1, vendedor.getId());
+				
+				pgstmt.execute();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn != null) {
+					conn.close();
+				}
+				if(pgstmt != null) {
+					pgstmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

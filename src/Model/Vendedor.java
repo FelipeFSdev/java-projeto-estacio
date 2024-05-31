@@ -33,27 +33,12 @@ public class Vendedor extends Pessoa{
 		this.cargo = novoCargo;
 	};
 	
-	public double getSalarioAnual() {
-		double salarioAnual = this.salario*12;
-		
-		return salarioAnual;
+	public double getSalario() {
+		return this.salario;
 	};
 	public void setSalario(double novoSalario) {
 		this.salario = novoSalario;
 	};
-	
-	public String cadastrarCliente(
-			String nome, String email,
-			String cpf, int idade
-	){
-		//TODO codigo para cadastrar no banco de dados
-		return "Cliente cadastrado com sucesso!";
-	};
-	public String atualizarCliente(String nome, String email) {
-		setNome(nome);
-		setEmail(email);
-		return "Atualização realizada!";
-	}
 	@Override
 	public String toString() {
 		return "nome:" + nome + ", email:" + email + ", cpf:" + cpf + ", idade:"
