@@ -48,7 +48,7 @@ public class Cliente extends Pessoa{
 	
 	@Override
 	public String toString() {
-		return "nome: " + nome + ", email: " + email + ", cpf: " + cpf + ", idade: " + idade +
-				", endereco: " + endereco + ", cep: " + cep +", numero da casa: " + numeroCasa;
+		return "Cliente: " + nome + ". Email: " + email + ". CPF: " + cpf + ". Idade: " + idade +
+				". Endereço: " + endereco + ". CEP: " + cep + ". Numero de residência: " + numeroCasa + ".";
 	}
 }

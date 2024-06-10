@@ -9,7 +9,9 @@ public abstract class Pessoa {
 	protected String cpf;
 	protected int idade;
 	
-	public Pessoa() {}
+	public Pessoa() {
+		id = UUID.randomUUID().toString();
+	}
 	
 	public Pessoa (
 			String nome, String email,

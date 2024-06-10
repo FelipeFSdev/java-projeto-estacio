@@ -59,7 +59,7 @@ public class ProdutoDAO {
 	}
 	
 	public Produto ListarPorNome(String nome) {
-		String sql = "SELECT * FROM produtos WHERE nome = ?";
+		String sql = "SELECT * FROM produtos WHERE nome ILIKE ?";
 		
 		Connection conn = null;
 		PreparedStatement pgstmt = null;

@@ -13,7 +13,7 @@ import Utilitarios.ConexaoBanco;
 public class ClienteDAO {
 	
 	public List<Cliente> Listar(){
-		String sql = "SELECT * FROM pessoas WHERE cargo != 'gerente' and cargo != 'vendedor'";
+		String sql = "SELECT * FROM pessoas WHERE cargo IS NULL";
 		List<Cliente> clientes = new ArrayList<>();
 		
 		Connection conn = null;
@@ -59,7 +59,7 @@ public class ClienteDAO {
 	}
 	
 	public Cliente ListarPorCpf (String cpf) {
-		String sql = "SELECT * FROM pessoas WHERE cpf ILIKE ? AND cargo != 'vendedor' AND cargo != 'gerente'";
+		String sql = "SELECT * FROM pessoas WHERE cpf ILIKE ? AND cargo IS NULL";
 		
 		Connection conn = null;
 		PreparedStatement pgstmt = null;
@@ -105,7 +105,7 @@ public class ClienteDAO {
 	}
 
 	public void Salvar(Cliente cliente) {
-		String sql = "INSERT INTO pessoas (id, nome, email, cpf, idade, senha, endereco, cep, numero_casa VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO pessoas (id, nome, email, cpf, idade, senha, endereco, cep, numero_casa) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		Connection conn = null;
 		PreparedStatement pgstmt = null;
@@ -126,7 +126,7 @@ public class ClienteDAO {
 			
 			pgstmt.execute();
 			
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}

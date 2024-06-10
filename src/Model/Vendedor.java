@@ -41,8 +41,8 @@ public class Vendedor extends Pessoa{
 	};
 	@Override
 	public String toString() {
-		return "nome:" + nome + ", email:" + email + ", cpf:" + cpf + ", idade:"
-				+ idade + ", cargo:" + cargo + ", salario anual:" + salario;
+		return "Funcionário:" + nome + ". Email:" + email + ". CPF:" + cpf + ". Idade:"
+				+ idade + ". Cargo:" + cargo + ". Salario anual:" + salario + ".";
 	}
 
 	
