@@ -84,7 +84,7 @@ public class telaPrincipal extends JFrame {
 		SpringLayout sl_panel = new SpringLayout();
 		panel.setLayout(sl_panel);
 		
-		JLabel labelQuantidadeItens = new JLabel("0");
+		JLabel labelQuantidadeItens = new JLabel("");
 		sl_panel.putConstraint(SpringLayout.NORTH, labelQuantidadeItens, 17, SpringLayout.NORTH, panel);
 		panel.add(labelQuantidadeItens);
 		
@@ -165,35 +165,7 @@ public class telaPrincipal extends JFrame {
 		panel_1.setForeground(Color.RED);
 		panel_1.setBackground(Color.RED);
 		
-		JLabel lblCarrinho = new JLabel("New label");
-		sl_panel.putConstraint(SpringLayout.WEST, labelQuantidadeItens, 10, SpringLayout.EAST, lblCarrinho);
-		sl_panel.putConstraint(SpringLayout.EAST, labelQuantidadeItens, 20, SpringLayout.EAST, lblCarrinho);
-		sl_panel.putConstraint(SpringLayout.NORTH, lblCarrinho, 23, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.WEST, lblCarrinho, 45, SpringLayout.EAST, lblNome);
-		sl_panel.putConstraint(SpringLayout.SOUTH, lblCarrinho, 50, SpringLayout.NORTH, panel);
-		sl_panel.putConstraint(SpringLayout.EAST, lblCarrinho, 90, SpringLayout.EAST, lblNome);
-		lblCarrinho.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				dispose();
-				telaCarrinho telaCarrinho = new telaCarrinho();
-				telaCarrinho.setVisible(true);
-			}
-		});
-		panel.add(lblCarrinho);
-		
-		ImageIcon icon1 = new ImageIcon(getClass().getResource("/imagens/carrinho.png"));
-		
-		lblCarrinho.addComponentListener(new ComponentAdapter() {
-	            @Override
-	            public void componentResized(ComponentEvent e) {
-	                int width = lblCarrinho.getWidth();
-	                int height = lblCarrinho.getHeight();
-	                Image img = icon1.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-	                lblCarrinho.setIcon(new ImageIcon(img));
-	            }
-	        });
-    
+	
         
        
 		JToolBar toolBar = new JToolBar();
@@ -250,11 +222,6 @@ public class telaPrincipal extends JFrame {
 	                lblImagem.setIcon(new ImageIcon(img));
 	            }
 	        });
-		
-	}
-
-	public void setQntItens(String text) {
-		// TODO Auto-generated method stub
 		
 	}
 }

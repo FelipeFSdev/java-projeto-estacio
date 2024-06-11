@@ -10,6 +10,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import DataAccessObject.ClienteDAO;
+import DataAccessObject.PedidoDAO;
+import DataAccessObject.PedidoProdutoDAO;
+import DataAccessObject.ProdutoDAO;
+import Model.Cliente;
+import Model.Pedido;
+import Model.PedidoProduto;
+import Model.Produto;
+
 import javax.swing.SpringLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +29,11 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.UIManager;
+import javax.swing.JTextField;
 
 public class telaCozinha extends JFrame {
 	
@@ -27,10 +41,16 @@ public class telaCozinha extends JFrame {
 	int contador2 = 0;
 	int contador3 = 0;
 	int contador5 = 0;
+	List<Produto> carrinhoArray = new ArrayList<>();
 	
 	telaPrincipal carrinho = new telaPrincipal();
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField caixaCPF;
+	private JTextField caixaEndereco;
+	private JTextField caixaNumeroCasa;
+	private JTextField caixaCEP;
+	private JTextField caixaDescricao;
 
 	/**
 	 * Launch the application.
@@ -54,7 +74,7 @@ public class telaCozinha extends JFrame {
 	public telaCozinha() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
+		setBounds(100, 100, 1182, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -85,8 +105,8 @@ public class telaCozinha extends JFrame {
 		JLabel lblImage2 = new JLabel();
 		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage2, 20, SpringLayout.NORTH, panel_1);
 		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage2, 20, SpringLayout.WEST, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage2, -250, SpringLayout.SOUTH, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage2, -600, SpringLayout.EAST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage2, 181, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage2, 194, SpringLayout.WEST, panel_1);
 		lblImage2.setPreferredSize(new Dimension(10, 10));
 		panel_1.add(lblImage2);
 		
@@ -103,13 +123,45 @@ public class telaCozinha extends JFrame {
         });
 		
 		JPanel panel_4 = new JPanel();
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_4, 100, SpringLayout.NORTH, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_4, 10, SpringLayout.EAST, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_4, -30, SpringLayout.SOUTH, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_4, 138, SpringLayout.EAST, lblImage2);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_4, 120, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_4, 204, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_4, 151, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_4, 332, SpringLayout.WEST, panel_1);
 		panel_4.setBackground(Color.LIGHT_GRAY);
 		panel_1.add(panel_4);
 		panel_4.setLayout(null);
+		
+		JLabel lblNewLabel_4_1 = new JLabel("Jogo de Pratos");
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1, 70, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1, 204, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4_1, 85, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_1, 342, SpringLayout.WEST, panel_1);
+		lblNewLabel_4_1.setBackground(new Color(240, 240, 240));
+		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		panel_1.add(lblNewLabel_4_1);
+		
+		JLabel lblNewLabel_4_1_1 = new JLabel("Jogo de Copos");
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1_1, 70, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1_1, 624, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_1_1, 752, SpringLayout.WEST, panel_1);
+		lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_4_1_1.setBackground(UIManager.getColor("Button.background"));
+		panel_1.add(lblNewLabel_4_1_1);
+		
+		JLabel lblNewLabel_4_1_2 = new JLabel("Jogo de Talheres");
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1_2, 280, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1_2, 204, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_1_2, 392, SpringLayout.WEST, panel_1);
+		lblNewLabel_4_1_2.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_4_1_2.setBackground(UIManager.getColor("Button.background"));
+		panel_1.add(lblNewLabel_4_1_2);
+		
+		JLabel lblNewLabel_4_1_2_1 = new JLabel("Conjunto de Panelas");
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1_2_1, 280, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1_2_1, 624, SpringLayout.WEST, panel_1);
+		lblNewLabel_4_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_4_1_2_1.setBackground(UIManager.getColor("Button.background"));
+		panel_1.add(lblNewLabel_4_1_2_1);
 		
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(35, 0, 53, 41);
@@ -124,12 +176,15 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel = new JLabel("+");
 		lblNewLabel.addMouseListener(new MouseAdapter() {	
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String pratos = lblNewLabel_4_1.getText();
+				Produto produto = produtoDao.ListarPorNome(pratos);
+				
+				carrinhoArray.add(produto);
 				
 				contador1++;
-				caixaContador1.setText(""+ contador1);
-				carrinho.setQntItens(caixaContador1.getText());
-				
-				
+				caixaContador1.setText(""+ contador1);			
 			}
 		});
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 29));
@@ -139,6 +194,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("-");
 		lblNewLabel_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String pratos = lblNewLabel_4_1.getText();
+				Produto produto = produtoDao.ListarPorNome(pratos);
+				
+				carrinhoArray.remove(produto);
+				
 				contador1--;
 				caixaContador1.setText(""+contador1);
 			}
@@ -148,10 +210,10 @@ public class telaCozinha extends JFrame {
 		panel_4.add(lblNewLabel_1);
 		
 		JLabel lblImage3 = new JLabel();
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage3, 60, SpringLayout.SOUTH, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage3, 0, SpringLayout.WEST, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage3, -38, SpringLayout.SOUTH, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage3, 0, SpringLayout.EAST, lblImage2);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage3, 241, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage3, 20, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage3, 393, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage3, 194, SpringLayout.WEST, panel_1);
 		lblImage3.setPreferredSize(new Dimension(10, 10));
 		ImageIcon icon3 = new ImageIcon(getClass().getResource("/imagens/telheres.png"));
 		lblImage2.addComponentListener(new ComponentAdapter() {
@@ -166,16 +228,16 @@ public class telaCozinha extends JFrame {
 		panel_1.add(lblImage3);
 		
 		JLabel lblImage4 = new JLabel();
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage4, 0, SpringLayout.NORTH, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage4, 240, SpringLayout.EAST, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage4, 0, SpringLayout.SOUTH, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage4, -180, SpringLayout.EAST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage4, 20, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage4, 434, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage4, 181, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage4, 614, SpringLayout.WEST, panel_1);
 		lblImage4.setPreferredSize(new Dimension(10, 10));
 		panel_1.add(lblImage4);
 		
 		JPanel panel_4_1 = new JPanel();
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_4_1, 0, SpringLayout.NORTH, panel_4);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_4_1, -10, SpringLayout.EAST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_4_1, 120, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_4_1, 783, SpringLayout.WEST, panel_1);
 		panel_4_1.setLayout(null);
 		panel_4_1.setBackground(Color.LIGHT_GRAY);
 		panel_1.add(panel_4_1);
@@ -196,11 +258,11 @@ public class telaCozinha extends JFrame {
 		panel_4_1.add(lblNewLabel_1_1);
 		
 		JPanel panel_6 = new JPanel();
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_6, 0, SpringLayout.NORTH, panel_4);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_6, 0, SpringLayout.SOUTH, panel_4);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_6, 120, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_6, 624, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_6, 151, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_6, 752, SpringLayout.WEST, panel_1);
 		panel_6.setBackground(Color.LIGHT_GRAY);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_6, 10, SpringLayout.EAST, lblImage4);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_6, 138, SpringLayout.EAST, lblImage4);
 		panel_1.add(panel_6);
 		panel_6.setLayout(null);
 		
@@ -217,6 +279,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_1_2 = new JLabel("-");
 		lblNewLabel_1_2.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String copos = lblNewLabel_4_1_1.getText();
+				Produto produto = produtoDao.ListarPorNome(copos);
+				
+				carrinhoArray.remove(produto);
+				
 				contador3--;
 				caixaContador4.setText(""+ contador3);
 			}
@@ -228,6 +297,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("+");
 		lblNewLabel_3.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String copos = lblNewLabel_4_1_1.getText();
+				Produto produto = produtoDao.ListarPorNome(copos);
+				
+				carrinhoArray.add(produto);
+				
 				contador3++;
 				caixaContador4.setText(""+ contador3);
 				
@@ -238,43 +314,26 @@ public class telaCozinha extends JFrame {
 		panel_6.add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("R$ 31,90");
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4, -30, SpringLayout.NORTH, panel_4);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4, -10, SpringLayout.NORTH, panel_4);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4, 90, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4, 204, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4, 110, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4, 332, SpringLayout.WEST, panel_1);
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4, 10, SpringLayout.EAST, lblImage2);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4, 0, SpringLayout.EAST, panel_4);
 		panel_1.add(lblNewLabel_4);
 		
-		JLabel lblNewLabel_4_1 = new JLabel("Jogo de Pratos");
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1, -20, SpringLayout.NORTH, lblNewLabel_4);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4_1, -5, SpringLayout.NORTH, lblNewLabel_4);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_1, 10, SpringLayout.EAST, panel_4);
-		lblNewLabel_4_1.setBackground(new Color(240, 240, 240));
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1, 10, SpringLayout.EAST, lblImage2);
-		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		panel_1.add(lblNewLabel_4_1);
-		
 		JLabel lblNewLabel_4_2 = new JLabel("R$ 22,99");
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_2, 0, SpringLayout.NORTH, lblNewLabel_4);
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_2, 10, SpringLayout.EAST, lblImage4);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_2, 0, SpringLayout.EAST, panel_6);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_2, 90, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_2, 624, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_2, 752, SpringLayout.WEST, panel_1);
 		lblNewLabel_4_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_1.add(lblNewLabel_4_2);
 		
-		JLabel lblNewLabel_4_1_1 = new JLabel("Jogo de Copos");
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1_1, 0, SpringLayout.NORTH, lblNewLabel_4_1);
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1_1, 10, SpringLayout.EAST, lblImage4);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_1_1, 0, SpringLayout.EAST, panel_6);
-		lblNewLabel_4_1_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_4_1_1.setBackground(UIManager.getColor("Button.background"));
-		panel_1.add(lblNewLabel_4_1_1);
-		
 		JPanel panel_8 = new JPanel();
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_8, 331, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_8, 204, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_8, 363, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_8, 332, SpringLayout.WEST, panel_1);
 		panel_8.setBackground(Color.LIGHT_GRAY);
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_8, 90, SpringLayout.NORTH, lblImage3);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_8, 0, SpringLayout.WEST, panel_4);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_8, -30, SpringLayout.SOUTH, lblImage3);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_8, 0, SpringLayout.EAST, panel_4);
 		panel_1.add(panel_8);
 		panel_8.setLayout(null);
 		
@@ -291,6 +350,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_5 = new JLabel("+");
 		lblNewLabel_5.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String talher = lblNewLabel_4_1_2.getText();
+				Produto produto = produtoDao.ListarPorNome(talher);
+				
+				carrinhoArray.add(produto);
+				
 				contador2++;
 				caixaContador2.setText(""+ contador2);
 			}
@@ -302,6 +368,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_1_3 = new JLabel("-");
 		lblNewLabel_1_3.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String talher = lblNewLabel_4_1_2.getText();
+				Produto produto = produtoDao.ListarPorNome(talher);
+				
+				carrinhoArray.remove(produto);
+				
 				contador2--;
 				caixaContador2.setText(""+ contador2);
 			}
@@ -311,25 +384,17 @@ public class telaCozinha extends JFrame {
 		panel_8.add(lblNewLabel_1_3);
 		
 		JLabel lblNewLabel_4_3 = new JLabel("R$ 27,99");
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_3, 0, SpringLayout.WEST, lblNewLabel_4);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4_3, -6, SpringLayout.NORTH, panel_8);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_3, 0, SpringLayout.EAST, lblNewLabel_4);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_3, 300, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_3, 204, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_3, 332, SpringLayout.WEST, panel_1);
 		lblNewLabel_4_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_1.add(lblNewLabel_4_3);
 		
-		JLabel lblNewLabel_4_1_2 = new JLabel("Jogo de Talheres");
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1_2, 0, SpringLayout.WEST, lblNewLabel_4_1);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4_1_2, -1, SpringLayout.NORTH, lblNewLabel_4_3);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_1_2, 50, SpringLayout.EAST, lblNewLabel_4_1);
-		lblNewLabel_4_1_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_4_1_2.setBackground(UIManager.getColor("Button.background"));
-		panel_1.add(lblNewLabel_4_1_2);
-		
 		JLabel lblImage5 = new JLabel();
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage5, 15, SpringLayout.NORTH, lblImage3);
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage5, 15, SpringLayout.WEST, lblImage4);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage5, 0, SpringLayout.SOUTH, lblImage3);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage5, 0, SpringLayout.EAST, lblImage4);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblImage5, 256, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblImage5, 449, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblImage5, 393, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblImage5, 614, SpringLayout.WEST, panel_1);
 		lblImage5.setPreferredSize(new Dimension(10, 10));
 		ImageIcon icon5 = new ImageIcon(getClass().getResource("/imagens/panelas.png"));
 		lblImage5.addComponentListener(new ComponentAdapter() {
@@ -344,11 +409,11 @@ public class telaCozinha extends JFrame {
 		panel_1.add(lblImage5);
 		
 		JPanel panel_10 = new JPanel();
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_10, 331, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_10, 624, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_10, 363, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_10, 752, SpringLayout.WEST, panel_1);
 		panel_10.setBackground(Color.LIGHT_GRAY);
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_10, 0, SpringLayout.NORTH, panel_8);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_10, 0, SpringLayout.WEST, panel_6);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_10, 0, SpringLayout.SOUTH, panel_8);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_10, 0, SpringLayout.EAST, panel_6);
 		panel_1.add(panel_10);
 		panel_10.setLayout(null);
 		
@@ -365,6 +430,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_1_2_1 = new JLabel("-");
 		lblNewLabel_1_2_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String panelas = lblNewLabel_4_1_2_1.getText();
+				Produto produto = produtoDao.ListarPorNome(panelas);
+				
+				carrinhoArray.remove(produto);
+				
 				contador5--;
 				caixaContador5.setText("" + contador5);
 			}
@@ -376,6 +448,13 @@ public class telaCozinha extends JFrame {
 		JLabel lblNewLabel_3_1 = new JLabel("+");
 		lblNewLabel_3_1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
+				ProdutoDAO produtoDao = new ProdutoDAO();
+				
+				String panelas = lblNewLabel_4_1_2_1.getText();
+				Produto produto = produtoDao.ListarPorNome(panelas);
+				
+				carrinhoArray.add(produto);
+				
 				contador5++;
 				caixaContador5.setText(""+ contador5);
 			}
@@ -385,20 +464,18 @@ public class telaCozinha extends JFrame {
 		panel_10.add(lblNewLabel_3_1);
 		
 		JLabel lblNewLabel_4_3_1 = new JLabel("R$ 265,90");
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_3_1, 0, SpringLayout.WEST, lblNewLabel_4_2);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, lblNewLabel_4_3_1, 0, SpringLayout.SOUTH, lblNewLabel_4_3);
-		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_3_1, 0, SpringLayout.EAST, panel_6);
+		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_3_1, 300, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_3_1, 624, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, lblNewLabel_4_3_1, 752, SpringLayout.WEST, panel_1);
 		lblNewLabel_4_3_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		panel_1.add(lblNewLabel_4_3_1);
 		
-		JLabel lblNewLabel_4_1_2_1 = new JLabel("Conjunto de Panelas");
-		sl_panel_1.putConstraint(SpringLayout.NORTH, lblNewLabel_4_1_2_1, 0, SpringLayout.NORTH, lblNewLabel_4_1_2);
-		sl_panel_1.putConstraint(SpringLayout.WEST, lblNewLabel_4_1_2_1, 0, SpringLayout.WEST, lblNewLabel_4_1_1);
-		lblNewLabel_4_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_4_1_2_1.setBackground(UIManager.getColor("Button.background"));
-		panel_1.add(lblNewLabel_4_1_2_1);
 		
 		JPanel panel_12 = new JPanel();
+		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_12, 0, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.WEST, panel_12, 859, SpringLayout.WEST, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_12, 431, SpringLayout.NORTH, panel_1);
+		sl_panel_1.putConstraint(SpringLayout.EAST, panel_12, 1076, SpringLayout.WEST, panel_1);
 		panel_12.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				caixaContador1.setText("0");
@@ -408,29 +485,77 @@ public class telaCozinha extends JFrame {
 				
 			}
 		});
-		sl_panel_1.putConstraint(SpringLayout.NORTH, panel_12, -35, SpringLayout.SOUTH, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.WEST, panel_12, 0, SpringLayout.WEST, panel_10);
-		sl_panel_1.putConstraint(SpringLayout.SOUTH, panel_12, 0, SpringLayout.SOUTH, panel_1);
-		sl_panel_1.putConstraint(SpringLayout.EAST, panel_12, 0, SpringLayout.EAST, panel_1);
 		panel_1.add(panel_12);
-		SpringLayout sl_panel_12 = new SpringLayout();
-		panel_12.setLayout(sl_panel_12);
 		
-		JLabel lblNewLabel_6 = new JLabel("Adicionar ao Carrinho");
+		JLabel lblNewLabel_6 = new JLabel("Finalizar compra");
+		lblNewLabel_6.setBounds(48, 386, 123, 34);
 		lblNewLabel_6.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 			
-			
+				
+				finalizarCompra();
 			}
 			});
+		panel_12.setLayout(null);
 		
 		lblNewLabel_6.setForeground(Color.BLACK);
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 13));
-		sl_panel_12.putConstraint(SpringLayout.NORTH, lblNewLabel_6, 5, SpringLayout.NORTH, panel_12);
-		sl_panel_12.putConstraint(SpringLayout.WEST, lblNewLabel_6, 15, SpringLayout.WEST, panel_12);
-		sl_panel_12.putConstraint(SpringLayout.SOUTH, lblNewLabel_6, -5, SpringLayout.SOUTH, panel_12);
-		sl_panel_12.putConstraint(SpringLayout.EAST, lblNewLabel_6, -15, SpringLayout.EAST, panel_12);
 		panel_12.add(lblNewLabel_6);
+		
+		JLabel lblNewLabel_7 = new JLabel("Confirmar dados:");
+		lblNewLabel_7.setBounds(10, 10, 98, 14);
+		lblNewLabel_7.setFont(new Font("Arial", Font.BOLD, 12));
+		panel_12.add(lblNewLabel_7);
+		
+		JLabel lblNewLabel_8 = new JLabel("CPF:");
+		lblNewLabel_8.setBounds(10, 30, 27, 14);
+		lblNewLabel_8.setFont(new Font("Arial", Font.PLAIN, 12));
+		panel_12.add(lblNewLabel_8);
+		
+		caixaCPF = new JTextField();
+		caixaCPF.setBounds(10, 50, 98, 20);
+		panel_12.add(caixaCPF);
+		caixaCPF.setColumns(10);
+		
+		JLabel lblNewLabel_8_1 = new JLabel("Endereço:");
+		lblNewLabel_8_1.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblNewLabel_8_1.setBounds(10, 81, 68, 14);
+		panel_12.add(lblNewLabel_8_1);
+		
+		caixaEndereco = new JTextField();
+		caixaEndereco.setColumns(10);
+		caixaEndereco.setBounds(10, 106, 98, 20);
+		panel_12.add(caixaEndereco);
+		
+		JLabel lblNewLabel_8_1_1 = new JLabel("N° Casa:");
+		lblNewLabel_8_1_1.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblNewLabel_8_1_1.setBounds(10, 137, 68, 14);
+		panel_12.add(lblNewLabel_8_1_1);
+		
+		caixaNumeroCasa = new JTextField();
+		caixaNumeroCasa.setColumns(10);
+		caixaNumeroCasa.setBounds(10, 162, 98, 20);
+		panel_12.add(caixaNumeroCasa);
+		
+		JLabel lblNewLabel_8_1_1_1 = new JLabel("CEP:");
+		lblNewLabel_8_1_1_1.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblNewLabel_8_1_1_1.setBounds(10, 193, 68, 14);
+		panel_12.add(lblNewLabel_8_1_1_1);
+		
+		caixaCEP = new JTextField();
+		caixaCEP.setColumns(10);
+		caixaCEP.setBounds(10, 218, 98, 20);
+		panel_12.add(caixaCEP);
+		
+		JLabel lblNewLabel_8_1_1_1_1 = new JLabel("Descrição:");
+		lblNewLabel_8_1_1_1_1.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblNewLabel_8_1_1_1_1.setBounds(10, 249, 68, 14);
+		panel_12.add(lblNewLabel_8_1_1_1_1);
+		
+		caixaDescricao = new JTextField();
+		caixaDescricao.setColumns(10);
+		caixaDescricao.setBounds(10, 270, 186, 85);
+		panel_12.add(caixaDescricao);
 		
 		ImageIcon icon4 = new ImageIcon(getClass().getResource("/imagens/copos.png"));
 		lblImage2.addComponentListener(new ComponentAdapter() {
@@ -517,5 +642,61 @@ public class telaCozinha extends JFrame {
 	                lblImagem.setIcon(new ImageIcon(img));
 	            }
 	        });
+	}
+	
+	public void finalizarCompra() {
+		ClienteDAO clienteDao = new ClienteDAO();
+		PedidoDAO pedidoDao = new PedidoDAO();
+		PedidoProdutoDAO ppDao = new PedidoProdutoDAO();
+		
+		String cpfCliente = caixaCPF.getText();
+		String endereco = caixaEndereco.getText();
+		String cep = caixaCEP.getText();
+		String numCasa = caixaNumeroCasa.getText();
+		String descricao = caixaDescricao.getText();
+		
+		if(cpfCliente.equals("") || endereco.equals("") || cep.equals("") || numCasa.equals("") || descricao.equals("")) {
+			JOptionPane.showMessageDialog(this, "Todos os campos devem estar preenchidos.");
+			return;
+		}
+
+		Cliente cliente = clienteDao.ListarPorCpf(cpfCliente);
+		if(cliente == null){
+			JOptionPane.showMessageDialog(this, "Cliente não registrado.");
+			return;
+		}
+		
+		cliente.setEndereco(endereco);
+		cliente.setCep(cep);
+		cliente.setNumeroCasa(numCasa);
+		clienteDao.Atualizar(cliente);
+		
+		Pedido pedido = new Pedido(cliente.getId(), descricao);
+		String pedidoId = pedido.getId();
+		double valorTotalProd = 0;
+		pedidoDao.Salvar(pedido);
+		
+		if(carrinhoArray.size() > 0) {
+			for(int i = 0; i < carrinhoArray.size(); i++) {
+				String produtoId = carrinhoArray.get(i).getId();
+				double valorProd = carrinhoArray.get(i).getValor();
+			
+				PedidoProduto pedidoProduto = new PedidoProduto(pedidoId, produtoId, 1, valorProd);
+			
+				valorTotalProd += pedidoProduto.getQuantidadeProduto() * pedidoProduto.getValorProduto();
+				pedido.setValor_total(valorTotalProd);
+				pedidoDao.Atualizar(pedido);
+			
+				ppDao.Salvar(pedidoProduto);
+			}
+			JOptionPane.showMessageDialog(
+					this,"Pedido no valor de: R$" + 
+					pedido.getValorTotal() +
+					" realizado com sucesso!");
+			
+			dispose();
+			telaPrincipal telaprincipal = new telaPrincipal();
+			telaprincipal.setVisible(true);
+		}
 	}
 }

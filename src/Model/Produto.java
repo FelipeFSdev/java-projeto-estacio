@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Produto {
@@ -81,6 +82,20 @@ public class Produto {
 		return "Produto:" + nome + ". Descrição:" + descricao + ". Quantidade:" + quantidade
 				+ ". Valor:" + valor + ". Categoria:" + categoria;
 	}
-	
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Produto produto = (Produto) obj;
+        return Objects.equals(nome, produto.nome);
+        // Compare outros campos se necessário...
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome);
+        // Combine hashcodes de outros campos se necessário...
+    }
 	
 }

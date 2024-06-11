@@ -173,14 +173,19 @@ public class telaRegistro extends JFrame {
 				String confirmarSenha = new String(caixaConfirmarSenha.getPassword());
 				String usuario = caixaUsuario.getText();
 				if(usuario.equals("") || senha.equals("") || confirmarSenha.equals("") || email.equals("") || cpf.equals("") || idade.equals("")) {
-					
-					JOptionPane.showMessageDialog(btnRegistrar, "Todas as caixas devem estar preenchidas");
-					
+					JOptionPane.showMessageDialog(btnRegistrar, "Todas as caixas devem estar preenchidas");				
 				}
 				else if(senha.equals(confirmarSenha)){
 					Cliente cliente = new Cliente();
 					ClienteDAO clienteDao = new ClienteDAO();
 					int idadeInt = Integer.parseInt(idade);
+					
+					Cliente clienteDuplicado = clienteDao.ListarPorCpf(cpf);
+					if(clienteDuplicado != null) {
+						System.err.println("Cpf já cadastrado no banco de dados");
+						JOptionPane.showMessageDialog(btnRegistrar, "Cpf já cadastrado no banco de dados");
+						return;
+					}
 					
 					cliente.setNome(usuario);
 					cliente.setEmail(email);
@@ -191,8 +196,8 @@ public class telaRegistro extends JFrame {
 					
 					JOptionPane.showMessageDialog(btnRegistrar, "Cadastro realizado com sucesso!");
 					dispose();
-					telaPrincipal telaprincipal = new telaPrincipal();
-					telaprincipal.setVisible(true);
+					telaLogin telaLogin = new telaLogin();
+					telaLogin.setVisible(true);
 					
 				} else {
 					JOptionPane.showMessageDialog(btnRegistrar, "As senhas devem ser iguais");
@@ -286,6 +291,20 @@ public class telaRegistro extends JFrame {
 		sl_panel_2.putConstraint(SpringLayout.EAST, caixaEmail, 326, SpringLayout.WEST, panel_2);
 		caixaEmail.setColumns(10);
 		panel_2.add(caixaEmail);
+		
+		JLabel lblNewLabel = new JLabel("<");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				telaLogin telalogin = new telaLogin();
+				telalogin.setVisible(true);
+			}
+		});
+		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		sl_panel_2.putConstraint(SpringLayout.NORTH, lblNewLabel, 10, SpringLayout.NORTH, panel_2);
+		sl_panel_2.putConstraint(SpringLayout.WEST, lblNewLabel, 10, SpringLayout.WEST, panel_2);
+		panel_2.add(lblNewLabel);
 		
 		JLabel lblFundo = new JLabel("New label");
         layout.putConstraint(SpringLayout.NORTH, lblFundo, 0, SpringLayout.NORTH, contentPane);

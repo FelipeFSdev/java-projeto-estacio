@@ -126,6 +126,13 @@ public class telaLogin extends JFrame {
 		lblNewLabel_1_1.setBounds(45, 144, 49, 14);
 		panel_2.add(lblNewLabel_1_1);
 		
+		JLabel lblIncorreto = new JLabel("Usuário ou senha incorretos");
+		lblIncorreto.setForeground(Color.RED);
+		lblIncorreto.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblIncorreto.setBounds(45, 215, 185, 14);
+		lblIncorreto.setVisible(false);
+		panel_2.add(lblIncorreto);
+		
 		caixaSenha = new JPasswordField();
 		caixaSenha.setBounds(95, 144, 100, 15);
 		panel_2.add(caixaSenha);
@@ -171,6 +178,8 @@ public class telaLogin extends JFrame {
 								telaPrincipal telaprincipal = new telaPrincipal();
 								telaprincipal.setVisible(true);
 								
+							} else {
+								lblIncorreto.setVisible(true);
 							}
 							
 						} else if (rset.getString("cargo") == "vendedor") {
@@ -186,6 +195,8 @@ public class telaLogin extends JFrame {
 								telaPrincipal telaprincipal = new telaPrincipal();
 								telaprincipal.setVisible(true);
 								
+							} else {
+								lblIncorreto.setVisible(true);
 							}
 						}
 						else {
@@ -198,9 +209,11 @@ public class telaLogin extends JFrame {
 							if(usuario.equals(gerente.getNome()) && senha.equals(gerente.getSenha())) {
 								
 								dispose();
-								telaPrincipal telaprincipal = new telaPrincipal();
-								telaprincipal.setVisible(true);
+								telaGerente telaGerente = new telaGerente();
+								telaGerente.setVisible(true);
 								
+							} else {
+								lblIncorreto.setVisible(true);
 							}
 						}
 						
@@ -229,8 +242,23 @@ public class telaLogin extends JFrame {
 			}
 		});
 		btnNewButton.setBackground(new Color(240, 255, 255));
-		btnNewButton.setBounds(95, 236, 89, 23);
+		btnNewButton.setBounds(85, 236, 89, 23);
 		panel_2.add(btnNewButton);
+		
+		JLabel lblNewLabel_2 = new JLabel("Registre-se agora!");
+		lblNewLabel_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				telaRegistro telaregistro = new telaRegistro();
+				telaregistro.setVisible(true);
+			}
+		});
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setBounds(75, 270, 133, 14);
+		panel_2.add(lblNewLabel_2);
+		
+		
 		
 		JLabel lblImagem = new JLabel("New label");
 		sl_contentPane.putConstraint(SpringLayout.NORTH, lblImagem, 71, SpringLayout.NORTH, contentPane);
